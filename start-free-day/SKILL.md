@@ -83,6 +83,11 @@ Keywords to try in order. Run the AI ones first so AI roles surface at the top:
 
 Stop when there are at least 5 valid results. Mark each result "AI: yes / no / unverified" after reading the description (look for LLM, GPT, OpenAI, Claude, agents, RAG, machine learning features, "AI-first").
 
+Reading the results (tested):
+- The page text lists cards as: title, company, location with "(Remote)", then markers such as "Applied", "Viewed", "Posted N hours ago", "Easy Apply". "Applied" means the user already applied: exclude it. "Viewed" only means opened: keep it and mention it.
+- After the exact matches, LinkedIn adds a block "We found more results related to your search that may not be exact matches". Those are valid candidates only if they pass the filters; the AI searches surface roles there such as "Desarrollador IA - agentes" or "Senior Agentic AI Developer".
+- Also exclude: Intern/Practicante/Junior titles, "Architect" roles, "Freelance" or per-hour contractor roles unless nothing else fills the list (then label them "freelance, USD/hr"), and cards whose location lacks "(Remote)" (for example "Bogota, D.C. (Hybrid)" or no mode at all).
+
 Notes:
 - `geoId=100876405` is Colombia. Without it LinkedIn may default to another country.
 - LinkedIn may add its own salary filter (`f_SAL`) to the URL. If results look too few, mention it.
@@ -107,11 +112,13 @@ Use it to complete the list when LinkedIn gives fewer than 5, and always report 
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-react-modalidad-remoto
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-modalidad-remoto
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-fullstack-modalidad-remoto
-https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-inteligencia-artificial-modalidad-remoto
 https://www.elempleo.com/co/ofertas-empleo/trabajo-ingeniero-ia-modalidad-remoto
+https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-fullstack-ia-modalidad-remoto
 ```
 
-If an AI search URL returns no results or a generic page, fall back to the site's search box with the same words. Mark each result "AI: yes / no / unverified" as on LinkedIn.
+Tested: the slugs `ingeniero-ia` and `desarrollador-fullstack-ia` return real developer roles. Do **not** use `inteligencia-artificial` in the slug: it returns mostly teaching and thematic-expert roles ("Docente de inteligencia artificial", "Experto temático", "Profesional en inteligencia artificial") that are not software jobs. Skip any card with Docente, Experto temático, Instructor, Tutor or Practicante in the title.
+
+If a URL returns no results, fall back to the site's search box with the same words. Mark each result "AI: yes / no / unverified" as on LinkedIn.
 
 Read the page text. Each card shows title, company, salary (often confidential), contract type, location, work mode and age ("Hace 1 semana").
 
