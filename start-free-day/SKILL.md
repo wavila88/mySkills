@@ -88,6 +88,8 @@ Reading the results (tested):
 - After the exact matches, LinkedIn adds a block "We found more results related to your search that may not be exact matches". Those are valid candidates only if they pass the filters; the AI searches surface roles there such as "Desarrollador IA - agentes" or "Senior Agentic AI Developer".
 - Also exclude: Intern/Practicante/Junior titles, "Architect" roles, "Freelance" or per-hour contractor roles unless nothing else fills the list (then label them "freelance, USD/hr"), and cards whose location lacks "(Remote)" (for example "Bogota, D.C. (Hybrid)" or no mode at all).
 
+Known limitation (tested in the Claude built-in browser pane): on LinkedIn the job description text is not exposed by `get_page_text`, `innerText` or `/jobs/view/<id>/` in a narrow pane. The card only gives title, company, location, mode, age, applicant count and Easy Apply. So for LinkedIn jobs report stack, English and salary as "unverified" unless the description is readable (try a wider browser window, or `computer` screenshots with scrolling in the right pane, or Claude in Chrome). Never infer them from the title alone. On elempleo the cards expose salary and age, but also not the description; open the offer link to read it.
+
 Notes:
 - `geoId=100876405` is Colombia. Without it LinkedIn may default to another country.
 - LinkedIn may add its own salary filter (`f_SAL`) to the URL. If results look too few, mention it.
