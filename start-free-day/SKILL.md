@@ -88,7 +88,29 @@ Reading the results (tested):
 - After the exact matches, LinkedIn adds a block "We found more results related to your search that may not be exact matches". Those are valid candidates only if they pass the filters; the AI searches surface roles there such as "Desarrollador IA - agentes" or "Senior Agentic AI Developer".
 - Also exclude: Intern/Practicante/Junior titles, "Architect" roles, "Freelance" or per-hour contractor roles unless nothing else fills the list (then label them "freelance, USD/hr"), and cards whose location lacks "(Remote)" (for example "Bogota, D.C. (Hybrid)" or no mode at all).
 
-Known limitation (tested in the Claude built-in browser pane): on LinkedIn the job description text is not exposed by `get_page_text`, `innerText` or `/jobs/view/<id>/` in a narrow pane. The card only gives title, company, location, mode, age, applicant count and Easy Apply. So for LinkedIn jobs report stack, English and salary as "unverified" unless the description is readable (try a wider browser window, or `computer` screenshots with scrolling in the right pane, or Claude in Chrome). Never infer them from the title alone. On elempleo the cards expose salary and age, but also not the description; open the offer link to read it.
+How to read the full description (tested, works): the job page and the search pane do not expose the description text, but LinkedIn's public guest endpoint does. Navigate the browser to any linkedin.com page (so the request is same-origin), then run this in the page with the JavaScript tool, passing the job IDs collected from the search:
+
+```js
+const ids = ['<id1>', '<id2>'];
+const out = [];
+for (const id of ids) {
+  const r = await fetch('https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/' + id);
+  const d = new DOMParser().parseFromString(await r.text(), 'text/html');
+  const t = (d.querySelector('.show-more-less-html__markup') || d.body).innerText.replace(/\s+/g, ' ');
+  const has = k => new RegExp(k, 'i').test(t);
+  const grab = p => (t.match(new RegExp('.{0,80}(' + p + ').{0,100}', 'i')) || [''])[0];
+  out.push({ id, net: has('\\.NET|C#'), react: has('React'),
+             ai: has('\\bAI\\b|LLM|OpenAI|agent|GPT|Copilot'),
+             english: grab('English|inglés|bilingual|bilingüe'),
+             years: grab('years|años'), salary: grab('salary|salario|USD|COP|\\$\\d'),
+             contract: grab('B2B|contract|contrato|full-time|indefinite') });
+}
+out
+```
+
+Read-only, no clicks, nothing is applied. It returns the real stack, English requirement, years of experience, contract type and salary when the post includes one. To get the IDs, use `currentJobId` from the page URL after clicking a card (the card list itself has no `href` with the ID).
+
+Match quality (learned from real runs): many roles titled "AI Engineer" or "Desarrollador IA" are Python-based. Judge by the description, not the title: report `Stack: .NET/C#`, `React`, or `Python` and mark a role as a **good match** only when the description requires or accepts .NET/C# or React as the main stack. Roles that are AI but Python-only go to a separate "AI, but different stack" line, never mixed into the top list. Seniority shown by LinkedIn ("Mid-Senior", "Associate") and required years (for example "9-12 years") must be reported so the user can judge fit. Contract type matters too: "Contract" or "B2B" is not the same as an indefinite employment contract; report it.
 
 Notes:
 - `geoId=100876405` is Colombia. Without it LinkedIn may default to another country.
