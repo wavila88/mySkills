@@ -2,7 +2,7 @@
 
 ## start-free-day
 
-Read-only morning briefing for a job search: Gmail (interviews, tests, deadlines), LinkedIn direct messages and recruiter invitations, and at least 5 remote Easy Apply proposals for .NET / React + .NET in Colombia. Excludes lead/staff roles.
+Read-only morning briefing for a job search: Gmail (interviews, tests, deadlines), LinkedIn direct messages and recruiter invitations, and at least 5 remote proposals (LinkedIn Easy Apply + elempleo.com) for .NET / React + .NET in Colombia. Excludes lead/staff roles.
 
 ### Install
 

@@ -1,6 +1,6 @@
 ---
 name: start-free-day
-description: Morning job-search briefing, read-only. Checks Gmail for important mail (interview invitations, technical tests, recruiter replies, payment deadlines), checks LinkedIn direct messages and recruiter invitations, and finds at least 5 remote Easy Apply job proposals for a .NET or React + .NET developer who speaks English. Use when the user says "start free day", "start-free-day", "revisa mi día", "inicia mi día libre", or asks for a job-search report from email and LinkedIn.
+description: Morning job-search briefing, read-only. Checks Gmail for important mail (interview invitations, technical tests, recruiter replies, payment deadlines), checks LinkedIn direct messages and recruiter invitations, and finds at least 5 remote job proposals (LinkedIn Easy Apply plus elempleo.com) for a .NET or React + .NET developer who speaks English. Use when the user says "start free day", "start-free-day", "revisa mi día", "inicia mi día libre", or asks for a job-search report from email and LinkedIn.
 ---
 
 # start-free-day
@@ -16,8 +16,8 @@ PROFILE:
 - Language: works in **English** (interviews and jobs may be in English)
 - Location: **Colombia**, remote only
 - Seniority: senior individual contributor. **Exclude** any Tech Lead, Team Lead, Líder Técnico, Staff, Principal, Manager or Architect role. The user has not held those roles.
-- Application type on LinkedIn: **Easy Apply** only
-- Minimum deliverable: **5 job proposals**, never fewer than 3
+- Application type on LinkedIn: **Easy Apply** only (elempleo.com has no Easy Apply; mark those as "apply on site")
+- Minimum deliverable: **5 job proposals** combined from LinkedIn and elempleo.com, never fewer than 3
 
 ## Tool resolution
 
@@ -30,6 +30,9 @@ Pick the first option that works for each source. If none works, say so in the r
 **LinkedIn** (there is no public API for messages)
 1. A browser tool with the user's own signed-in session: Claude in Chrome, the Claude built-in browser, or Playwright MCP with a persistent profile in opencode.
 2. Fallback: Gmail notification emails from `messages-noreply@linkedin.com`, `invitations@linkedin.com`, `hit-reply@linkedin.com`, `jobs-noreply@linkedin.com`.
+
+**elempleo.com** (no MCP or public API exists; do not use third-party scrapers)
+- A browser tool on the public site. Listings are readable without signing in.
 
 If LinkedIn shows a login page, stop and ask the user to sign in themselves in the browser window. Never type passwords, codes or cookies, and never ask for them in chat.
 
@@ -90,6 +93,25 @@ For each proposal, open the description and verify, then report: title, company,
 
 If fewer than 5 pass the filters, report what you found and say how many are missing. Do not pad the list with excluded roles.
 
+### 3b. Job proposals on elempleo.com
+
+Use it to complete the list when LinkedIn gives fewer than 5, and always report the best 2 to 3 elempleo results. Search pages (remote modality is part of the URL slug):
+
+```
+https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-react-modalidad-remoto
+https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-modalidad-remoto
+https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-fullstack-modalidad-remoto
+```
+
+Read the page text. Each card shows title, company, salary (often confidential), contract type, location, work mode and age ("Hace 1 semana").
+
+Rules:
+- Keep only cards with work mode **Remoto** and age of **1 month or less**; prefer the newest. Skip "Hace más de 1 mes".
+- Apply the same exclusions as LinkedIn (Lead, Líder, Staff, Principal, Manager, Architect; stack unrelated to .NET, C# or React; duplicates of roles already reported, for example the same company on LinkedIn).
+- Offer links are in the card anchors, in the form `https://www.elempleo.com/co/ofertas-trabajo/<slug>-<id>`. Get them by reading the `href` of the card title. Do not invent links. Open the offer to verify stack, English and requirements before reporting.
+- Many cards say "Empresa confidencial". Report them as such.
+- Cookies banner: choose the most privacy-preserving option or ignore it. Do not sign in, create an account or apply.
+
 ### 4. Report
 
 Write the report in the user's language (Spanish by default). Order:
@@ -98,7 +120,7 @@ Write the report in the user's language (Spanish by default). Order:
 2. **Interviews and tests** (table: when, company, role, notes)
 3. **Needs your reply**
 4. **LinkedIn messages** (new proposals first, then in process)
-5. **Job proposals** (table with link, at least 5)
+5. **Job proposals** (one table, at least 5, with link, source LinkedIn or elempleo, and how to apply)
 6. **Not verified / could not check** (sources that failed, unverified fields)
 
 Keep it short. Do not include the user's email address, phone, salary expectations or verification codes in the report.
