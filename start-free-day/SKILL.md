@@ -13,6 +13,7 @@ Works in Claude Code and opencode. It uses whatever tools the host provides (see
 
 PROFILE:
 - Role: Senior full-stack developer, **.NET** or **React + .NET**
+- AI interest: **prefer roles that involve AI** (LLM or OpenAI/Claude API integration, AI agents, "AI-first" or AI-assisted development, RAG, MCP, copilots) as long as the job is still software engineering with .NET, C# or React. List AI-related proposals first. Pure ML research, data science or MLOps roles do not count unless the user asks for them. Roles without AI are still valid; AI is a priority, not a requirement.
 - Language: works in **English** (interviews and jobs may be in English)
 - Location: **Colombia**, **100% remote only**. Exclude hybrid, on-site, "remote with office days", and relocation roles. On elempleo the work mode field must say "Remoto"; on LinkedIn the card must say "(Remote)".
 - MIN_SALARY: **10,000,000 COP per month** (gross). Edit this value to change the floor. Salary rules are under "Salary filter".
@@ -76,7 +77,11 @@ Search LinkedIn Jobs with filters Colombia + Remote + Easy Apply + past week, ne
 https://www.linkedin.com/jobs/search/?keywords=<KEYWORDS>&f_WT=2&f_AL=true&f_TPR=r604800&sortBy=DD&geoId=100876405
 ```
 
-Keywords to try in order: `.NET React full stack`, `.NET developer`, `C# full stack`, `React .NET`. Stop when there are at least 5 valid results.
+Keywords to try in order. Run the AI ones first so AI roles surface at the top:
+1. `.NET AI`, `C# LLM`, `React AI full stack`, `full stack OpenAI`, `AI engineer .NET`
+2. `.NET React full stack`, `.NET developer`, `C# full stack`, `React .NET`
+
+Stop when there are at least 5 valid results. Mark each result "AI: yes / no / unverified" after reading the description (look for LLM, GPT, OpenAI, Claude, agents, RAG, machine learning features, "AI-first").
 
 Notes:
 - `geoId=100876405` is Colombia. Without it LinkedIn may default to another country.
@@ -102,7 +107,11 @@ Use it to complete the list when LinkedIn gives fewer than 5, and always report 
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-react-modalidad-remoto
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-net-modalidad-remoto
 https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-fullstack-modalidad-remoto
+https://www.elempleo.com/co/ofertas-empleo/trabajo-desarrollador-inteligencia-artificial-modalidad-remoto
+https://www.elempleo.com/co/ofertas-empleo/trabajo-ingeniero-ia-modalidad-remoto
 ```
+
+If an AI search URL returns no results or a generic page, fall back to the site's search box with the same words. Mark each result "AI: yes / no / unverified" as on LinkedIn.
 
 Read the page text. Each card shows title, company, salary (often confidential), contract type, location, work mode and age ("Hace 1 semana").
 
@@ -133,7 +142,7 @@ Write the report in the user's language (Spanish by default). Order:
 2. **Interviews and tests** (table: when, company, role, notes)
 3. **Needs your reply**
 4. **LinkedIn messages** (new proposals first, then in process)
-5. **Job proposals** (one table, at least 5, with link, source LinkedIn or elempleo, and how to apply)
+5. **Job proposals** (one table, at least 5, AI-related first, with link, source LinkedIn or elempleo, AI yes/no/unverified, salary, and how to apply)
 6. **Not verified / could not check** (sources that failed, unverified fields)
 
 Keep it short. Do not include the user's email address, phone, salary expectations or verification codes in the report.
