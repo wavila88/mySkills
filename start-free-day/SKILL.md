@@ -14,7 +14,8 @@ Works in Claude Code and opencode. It uses whatever tools the host provides (see
 PROFILE:
 - Role: Senior full-stack developer, **.NET** or **React + .NET**
 - Language: works in **English** (interviews and jobs may be in English)
-- Location: **Colombia**, remote only
+- Location: **Colombia**, **100% remote only**. Exclude hybrid, on-site, "remote with office days", and relocation roles. On elempleo the work mode field must say "Remoto"; on LinkedIn the card must say "(Remote)".
+- MIN_SALARY: **10,000,000 COP per month** (gross). Edit this value to change the floor. Salary rules are under "Salary filter".
 - Seniority: senior individual contributor. **Exclude** any Tech Lead, Team Lead, Líder Técnico, Staff, Principal, Manager or Architect role. The user has not held those roles.
 - Application type on LinkedIn: **Easy Apply** only (elempleo.com has no Easy Apply; mark those as "apply on site")
 - Minimum deliverable: **5 job proposals** combined from LinkedIn and elempleo.com, never fewer than 3
@@ -107,10 +108,22 @@ Read the page text. Each card shows title, company, salary (often confidential),
 
 Rules:
 - Keep only cards with work mode **Remoto** and age of **1 month or less**; prefer the newest. Skip "Hace más de 1 mes".
+- Apply the salary filter below. Salaries here are monthly in millions of COP (for example "$8 a $10 millones").
 - Apply the same exclusions as LinkedIn (Lead, Líder, Staff, Principal, Manager, Architect; stack unrelated to .NET, C# or React; duplicates of roles already reported, for example the same company on LinkedIn).
 - Offer links are in the card anchors, in the form `https://www.elempleo.com/co/ofertas-trabajo/<slug>-<id>`. Get them by reading the `href` of the card title. Do not invent links. Open the offer to verify stack, English and requirements before reporting.
 - Many cards say "Empresa confidencial". Report them as such.
 - Cookies banner: choose the most privacy-preserving option or ignore it. Do not sign in, create an account or apply.
+
+### Salary filter (applies to LinkedIn and elempleo)
+
+Compare the offer against `MIN_SALARY`:
+- Salary published and **below** the floor: exclude it. For a range, keep it only if the top of the range is at or above the floor, and say "top of range" in the report.
+- Salary published and **at or above** the floor: keep it.
+- Salary not published ("Salario confidencial", nothing on LinkedIn): keep it only as "salary not published", after the offers with a published salary that passes. Do not count it as confirmed.
+- Salary in USD or EUR: convert with an approximate rate, say that it is approximate, and keep it only if clearly above the floor.
+- Salary shown per year or per hour: convert to monthly and say so.
+
+Fill the minimum of 5 first with offers that pass the floor. Offers with unpublished salary may complete the list but must be labeled, and say how many of the 5 are confirmed above the floor.
 
 ### 4. Report
 
