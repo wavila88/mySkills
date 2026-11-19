@@ -147,7 +147,7 @@ If a URL returns no results, fall back to the site's search box with the same wo
 Read the page text. Each card shows title, company, salary (often confidential), contract type, location, work mode and age ("Hace 1 semana").
 
 Rules:
-- Keep only cards with work mode **Remoto** and age of **1 month or less**; prefer the newest. Skip "Hace más de 1 mes".
+- Keep only cards with work mode **Remoto** and published **15 days ago or less**; prefer the newest. The card only shows a vague age ("Hace 1 semana", "Hace más de 1 mes"), so open each offer and read the exact "Publicado <día mes año>" date (for example "Publicado 3 Nov 2026"). Compare it with today's date and skip anything older than 15 days. If the date cannot be read, mark the offer "date unverified" and do not count it.
 - Apply the salary filter below. Salaries here are monthly in millions of COP (for example "$8 a $10 millones").
 - Apply the same exclusions as LinkedIn (Lead, Líder, Staff, Principal, Manager, Architect; stack unrelated to .NET, C# or React; duplicates of roles already reported, for example the same company on LinkedIn).
 - Offer links are in the card anchors, in the form `https://www.elempleo.com/co/ofertas-trabajo/<slug>-<id>`. Get them by reading the `href` of the card title. Do not invent links. Open the offer to verify stack, English and requirements before reporting.
